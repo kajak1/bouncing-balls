@@ -1,0 +1,23 @@
+{
+  "name": "bouncing-balls-with-gyroscope",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kajak1/bouncing-balls-with-gyroscope.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kajak1/bouncing-balls-with-gyroscope/issues"
+  },
+  "homepage": "https://github.com/kajak1/bouncing-balls-with-gyroscope#readme",
+  "dependencies": {
+    "prettier": "^2.1.1"
+  }
+}
