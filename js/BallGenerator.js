@@ -7,32 +7,27 @@ class Generator {
     this.reservedCoords = {};
     for (let i = 0; i <= 2; i++) {
       this.balls[i] = new Ball();
-      console.log(this.balls[i]);
-
+      // make sure no ball was created colliding with any other
       if (i != 0) {
         let fine = true;
-        const A = this.balls[i].coords[0];
+        const A = this.balls[i].coords;
         for (const prop in this.reservedCoords) {
           const B = this.reservedCoords[prop];
           if (distBetweenAB(A, B) <= 50) {
             fine = false;
-            console.log(`do usuniecia ${this.balls[i].coords}`);
-            this.balls[i] = {};
-            this.reservedCoords[prop] = [];
+            this.balls[i] = false;
+            this.reservedCoords[i] = [];
+            i -= 1;
             break;
           }
         }
         if (fine) {
-          console.log('dodalem coordy');
           this.reservedCoords[i] = this.balls[i].coords;
         }
       } else {
         this.reservedCoords[i] = this.balls[i].coords;
-        console.log('dodalem coordy');
       }
-      console.log(this.reservedCoords);
     }
-    // console.log(this.reservedCoords);
   }
 
   compare(ball1, ball2) {
@@ -75,7 +70,10 @@ class Generator {
     // this.findClosestBalls();
     console.log(this.balls);
     this.balls.forEach((ball) => {
-      ball.fall();
+      if (ball) {
+        console.log('jest');
+        ball.fall();
+      }
       // console.log(ball);
     });
     // console.log(this.balls[0], this.balls);

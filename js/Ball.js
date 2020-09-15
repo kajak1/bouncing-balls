@@ -3,8 +3,8 @@ import { canvas, ctx, random } from './constants.js';
 class Ball {
   constructor() {
     this.radius = 25;
-    this.x = random(100, canvas.width / 2);
-    this.y = random(0, 100);
+    this.x = random(200, canvas.width / 2);
+    this.y = random(-50, 100);
     this.coords = [this.x, this.y];
     this.speedX = random(1, 10);
     this.speedY = random(5, 20);
