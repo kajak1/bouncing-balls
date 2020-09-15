@@ -1,6 +1,6 @@
-import { canvas, ctx } from './constants.js';
+import { canvas, ctx, ballSize } from './constants.js';
 
-import Ball from './Ball.js';
+// import Ball from './Ball.js';
 import Background from './Background.js';
 import Generator from './BallGenerator.js';
 
@@ -12,14 +12,22 @@ import Generator from './BallGenerator.js';
 
 const background = new Background();
 const ballGenerator = new Generator();
+// const test = new Test();
 
-const start = () => {
+const pos = {
+  maxX: canvas.width - ballSize,
+  maxY: 600,
+  x: undefined,
+  y: undefined,
+};
+
+function start() {
   window.requestAnimationFrame(() => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     background.draw();
     ballGenerator.draw();
     start();
   });
-};
+}
 
 start();

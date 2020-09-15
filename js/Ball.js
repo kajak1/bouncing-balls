@@ -2,23 +2,36 @@ import { canvas, ctx, random } from './constants.js';
 
 class Ball {
   constructor() {
-    this.radius = 5;
-    this.x = random(0, canvas.width - 2 * this.radius);
-    this.y = random(-50, 600);
-    this.speed = random(5, 11);
-    this.momentum = 0;
+    this.radius = 25;
+    this.x = random(100, canvas.width / 2);
+    this.y = random(0, 100);
+    this.coords = [this.x, this.y];
+    this.speedX = random(1, 10);
+    this.speedY = random(5, 20);
+    this.collision = false;
+    // console.log(this);
   }
 
+  updateCoords() {}
+
   gravity() {
-    if (this.x != canvas.height) {
-      this.speed += 0.3;
+    if (this.y != canvas.height - this.radius) {
+      this.speedY += 0.3;
     }
   }
 
   collisionDetection() {
-    if (this.y >= canvas.height) {
-      this.y = canvas.height;
-      this.speed *= -1 / 2;
+    if (this.y >= canvas.height - this.radius) {
+      this.collision = true;
+      this.y = canvas.height - this.radius;
+      this.speedY *= -0.5;
+      if (this.speedX < 0.5) {
+        this.speedX = 0;
+      } else {
+        this.speedX *= 0.5;
+      }
+    } else {
+      this.collision = false;
     }
   }
 
@@ -27,11 +40,13 @@ class Ball {
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = 'white';
     ctx.fill();
-    // ctx.stroke();
+    ctx.stroke();
   }
 
   move() {
-    this.y += this.speed;
+    this.y += this.speedY;
+    this.x += this.speedX;
+    this.coords = [this.x, this.y];
   }
 
   fall() {
