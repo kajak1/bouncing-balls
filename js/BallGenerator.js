@@ -5,7 +5,7 @@ class Generator {
   constructor() {
     this.balls = [];
     this.reservedCoords = {};
-    for (let i = 0; i <= 2; i++) {
+    for (let i = 0; i <= 1; i++) {
       this.balls[i] = new Ball();
       // make sure no ball was created colliding with any other
       if (i != 0) {
@@ -42,42 +42,28 @@ class Generator {
 
   findClosestBalls() {
     const sorted = this.balls.sort(this.compare);
-    console.log(sorted);
-    this.balls.forEach((ball) => {
-      // console.log(ball);
-      const closest = () => {
-        sorted.forEach((el) => {
-          if (el == ball) {
-            return;
-          }
-          // console.log(el);
-          if (el.x < ball.x) {
-            if (ball.x - el.x < ball.closest.x) {
-              ball.closest = el;
-            }
-          } else {
-            if (el.x - ball.x < ball.closest.x) {
-              ball.closest = el;
-            }
-          }
-        });
-      };
-      closest();
-    });
+    // for (let i = 0; i <= sorted.length - 2; i += 2) {
+    if (distBetweenAB(sorted[0].coords, sorted[1].coords) <= 50) {
+      if (sorted[0].collision === false && sorted[1].collision === false) {
+        sorted[0].speedX *= -1;
+        sorted[1].speedX *= -1;
+        sorted[0].collision = true;
+        sorted[1].collision = true;
+      }
+    } else {
+      sorted[0].collision = false;
+      sorted[1].collision = false;
+    }
+    // }
   }
 
   draw() {
-    // this.findClosestBalls();
-    console.log(this.balls);
+    this.findClosestBalls();
     this.balls.forEach((ball) => {
       if (ball) {
-        console.log('jest');
         ball.fall();
       }
-      // console.log(ball);
     });
-    // console.log(this.balls[0], this.balls);
-    // console.log(this.balls[0]);
   }
 }
 

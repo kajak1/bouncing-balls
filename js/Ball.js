@@ -9,20 +9,18 @@ class Ball {
     this.speedX = random(1, 10);
     this.speedY = random(5, 20);
     this.collision = false;
-    // console.log(this);
+    this.onGround = false;
   }
 
-  updateCoords() {}
-
   gravity() {
-    if (this.y != canvas.height - this.radius) {
+    if (this.y + this.speedY < canvas.height - this.radius) {
       this.speedY += 0.3;
     }
   }
 
   collisionDetection() {
-    if (this.y >= canvas.height - this.radius) {
-      this.collision = true;
+    console.log(this.y, canvas.height - this.radius);
+    if (this.y + this.speedY >= canvas.height - this.radius) {
       this.y = canvas.height - this.radius;
       this.speedY *= -0.5;
       if (this.speedX < 0.5) {
@@ -30,8 +28,6 @@ class Ball {
       } else {
         this.speedX *= 0.5;
       }
-    } else {
-      this.collision = false;
     }
   }
 
@@ -51,8 +47,8 @@ class Ball {
 
   fall() {
     this.draw();
-    this.collisionDetection();
     this.gravity();
+    this.collisionDetection();
     this.move();
   }
 }
