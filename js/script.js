@@ -11,15 +11,8 @@ import Generator from './BallGenerator.js';
 })();
 
 const background = new Background();
-const ballGenerator = new Generator();
+const ballGenerator = new Generator(20);
 // const test = new Test();
-
-const pos = {
-  maxX: canvas.width - ballSize,
-  maxY: 600,
-  x: undefined,
-  y: undefined,
-};
 
 function start() {
   window.requestAnimationFrame(() => {

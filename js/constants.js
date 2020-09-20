@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const image = document.querySelector('.image');
+// const image = document.querySelector('.image');
 
 const random = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -14,5 +14,6 @@ function distBetweenAB(A, B) {
 }
 
 const ballSize = 10;
+const ballRadius = 25;
 
-export { canvas, ctx, random, distBetweenAB, ballSize, image };
+export { canvas, ctx, random, distBetweenAB, ballSize, ballRadius };
