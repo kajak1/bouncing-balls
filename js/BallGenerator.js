@@ -2,11 +2,11 @@ import Ball from './Ball.js';
 import { distBetweenAB, ballRadius } from './constants.js';
 
 class Generator {
-  constructor(ballsAmount) {
+  constructor(ballAmount) {
     this.balls = [];
     this.reservedCoords = {};
     this.collidingPairs = [];
-    for (let i = 0; i <= ballsAmount - 1; i++) {
+    for (let i = 0; i <= ballAmount - 1; i++) {
       this.balls[i] = new Ball(i);
       // make sure no ball was created colliding with any other
       if (i != 0) {

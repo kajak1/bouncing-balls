@@ -5,7 +5,7 @@ class Ball {
     this.index = index;
     this.radius = ballRadius;
     this.x = random(0, canvas.width);
-    this.y = random(26, 100);
+    this.y = random(0, canvas.height);
     this.coords = [this.x, this.y];
     this.speedX = random(-10, 10);
     this.speedY = random(-10, 10);
