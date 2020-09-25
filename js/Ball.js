@@ -75,15 +75,20 @@ class Ball {
     if (this.speedX > 15) {
       this.speedX = 15;
     }
+
     if (this.speedX < -15) {
       this.speedX = -15;
     }
+
     if (this.speedY > 15) {
       this.speedY = 15;
     }
+
     if (this.speedY < -15) {
       this.speedY = -15;
     }
+
+    // when speed is very low, set it to 0
     if (!(this.speedX > 0.2 || this.speedX < -0.2)) {
       this.speedX = 0;
     }

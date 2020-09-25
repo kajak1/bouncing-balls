@@ -10,26 +10,25 @@ class Generator {
       this.balls[i] = new Ball(i);
       // make sure no ball was created colliding with any other
       if (i != 0) {
-        let fine = true;
+        let isFine = true;
         const A = this.balls[i].coords;
         for (const prop in this.reservedCoords) {
           const B = this.reservedCoords[prop];
           if (distBetweenAB(A, B) <= 2 * ballRadius) {
-            fine = false;
-            this.balls[i] = false;
+            isFine = false;
+            this.balls[i] = null;
             this.reservedCoords[i] = [];
             i -= 1;
             break;
           }
         }
-        if (fine) {
+        if (isFine) {
           this.reservedCoords[i] = this.balls[i].coords;
         }
       } else {
         this.reservedCoords[i] = this.balls[i].coords;
       }
     }
-    // console.log(this.balls);
   }
 
   checkCollision() {

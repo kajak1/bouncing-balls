@@ -1,4 +1,4 @@
-import { canvas, ctx, ballSize } from './constants.js';
+import { canvas, ctx } from './constants.js';
 
 // import Ball from './Ball.js';
 import Background from './Background.js';
@@ -11,8 +11,7 @@ import Generator from './BallGenerator.js';
 })();
 
 const background = new Background();
-const ballGenerator = new Generator(20);
-// const test = new Test();
+const ballGenerator = new Generator(10);
 
 function start() {
   window.requestAnimationFrame(() => {
