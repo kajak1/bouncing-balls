@@ -1,1 +1,1 @@
-# bouncing-balls-with-gyroscope
+# bouncing-balls
