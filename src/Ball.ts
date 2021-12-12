@@ -1,16 +1,6 @@
 import { random } from "./utils";
 import { Moveable, Ball } from "./types";
 
-// export const drawable = (state: Ball): Drawable => ({
-//   draw: (ctx: CanvasRenderingContext2D): void => {
-//     ctx.fillStyle = "black";
-//     ctx.beginPath();
-//     ctx.arc(state.position.x, state.position.y, state.radius, 0, 2 * Math.PI);
-//     ctx.fill();
-//     ctx.stroke();
-//   },
-// });
-
 export const moveable = (state: Ball): Moveable => ({
   move: (): void => {
     state.position.x += state.velocity.x;
