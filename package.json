@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html -p 3000"
+    "start": "parcel index.html -p 3000",
+    "start-https": "parcel index.html -p 3000 --https"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,11 @@
   "homepage": "https://github.com/kajak1/bouncing-balls-with-gyroscope#readme",
   "dependencies": {
     "https-localhost": "^4.6.2",
+    "motion-sensors-polyfill": "^0.3.1",
     "prettier": "^2.1.1"
   },
   "devDependencies": {
+    "@types/motion-sensors-polyfill": "^0.3.1",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
     "eslint": "^8.4.1",

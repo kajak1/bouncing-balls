@@ -1,5 +1,6 @@
-import { setupCanvasSize } from "./utils";
+import { initSensor, setupCanvasSize } from "./utils";
 import { BallMaker } from "./BallMaker";
+import { VelocityController } from "./VelocityController";
 
 type AnimationCallback = (timestamp: DOMHighResTimeStamp) => void;
 
@@ -8,6 +9,9 @@ function animate(canvas: HTMLCanvasElement): AnimationCallback {
   maker.create(25, "small", "fast", "moveable");
   maker.create(25, "big", "slow", "moveable");
 
+  const sensor = initSensor();
+  const controller = new VelocityController(sensor);
+
   // eslint-disable-next-line
   return function animation(timestamp: DOMHighResTimeStamp): void {
     const ctx = canvas.getContext("2d");
@@ -15,6 +19,9 @@ function animate(canvas: HTMLCanvasElement): AnimationCallback {
     if (ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       maker.draw(ctx);
+
+      maker.update(controller.calculateVelocity(maker.getBalls));
+
       window.requestAnimationFrame(animation);
     }
   };

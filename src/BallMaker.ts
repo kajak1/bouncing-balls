@@ -1,5 +1,6 @@
 import { Ball, MoveableBall, UnknownBall } from "./types";
 import { Props, defaultBall, small, big, fast, slow, moveable } from "./Ball";
+import { Velocity } from "./VelocityController";
 
 class BallMaker {
   private balls: UnknownBall[] = [];
@@ -22,13 +23,19 @@ class BallMaker {
     return target;
   }
 
-  create(amount: number, ...props: (keyof typeof Props)[]): void {
-    for (let i = 1; i < amount; i++) {
+  public create(amount: number, ...props: (keyof typeof Props)[]): void {
+    for (let i = 0; i < amount; i++) {
       this.balls.push(this.createOne(...props));
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D): void {
+  public update(velocities: Velocity[]): void {
+    velocities.forEach((newVelocity, index) => {
+      this.balls[index].velocity = newVelocity;
+    });
+  }
+
+  public draw(ctx: CanvasRenderingContext2D): void {
     this.balls.forEach((ball) => {
       ball.draw(ctx);
 
@@ -36,6 +43,10 @@ class BallMaker {
         ball.move();
       }
     });
+  }
+
+  get getBalls(): UnknownBall[] {
+    return [...this.balls];
   }
 }
 
