@@ -1,4 +1,4 @@
-import { random } from "./utils";
+import { random } from "./math";
 import { Moveable, Ball } from "./types";
 
 export const moveable = (state: Ball): Moveable => ({
@@ -8,48 +8,45 @@ export const moveable = (state: Ball): Moveable => ({
   },
 });
 
-export const slow = (): Pick<Ball, "velocity"> => ({
-  velocity: {
-    x: random(1, 3),
-    y: random(1, 3),
-  },
-});
-
-export const fast = (): Pick<Ball, "velocity"> => ({
-  velocity: {
-    x: random(3, 5),
-    y: random(3, 5),
-  },
-});
-
 export const small = (): Pick<Ball, "radius"> => ({
-  radius: random(1, 5),
+  radius: random(1, 10),
 });
 
 export const big = (): Pick<Ball, "radius"> => ({
-  radius: random(5, 10),
+  radius: random(10, 20),
+});
+
+export const light = (): Pick<Ball, "mass"> => ({
+  mass: random(1, 10),
+});
+
+export const heavy = (): Pick<Ball, "mass"> => ({
+  mass: random(30, 40),
 });
 
 export const Props = {
   small,
   big,
-  slow,
-  fast,
+  light,
+  heavy,
   moveable,
 } as const;
 
-export const defaultBall = (): Ball => ({
+export const defaultBall = (id: number): Ball => ({
+  id: id,
+
   position: {
     x: random(1, window.innerWidth),
     y: random(1, window.innerHeight),
   },
 
   velocity: {
-    x: 0,
-    y: 0,
+    x: random(-5, 5),
+    y: random(-5, 5),
   },
 
   radius: 0,
+  mass: 0,
 
   draw: function (ctx: CanvasRenderingContext2D): void {
     ctx.fillStyle = "black";

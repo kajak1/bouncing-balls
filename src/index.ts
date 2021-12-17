@@ -1,16 +1,22 @@
 import { initSensor, setupCanvasSize } from "./utils";
-import { BallMaker } from "./BallMaker";
+import { BallController } from "./BallController";
 import { VelocityController } from "./VelocityController";
+import {
+  calcNewVelocities,
+  checkCollisions,
+  resolveCollision,
+} from "./collision";
 
 type AnimationCallback = (timestamp: DOMHighResTimeStamp) => void;
 
-function animate(canvas: HTMLCanvasElement): AnimationCallback {
-  const maker = new BallMaker();
-  maker.create(25, "small", "fast", "moveable");
-  maker.create(25, "big", "slow", "moveable");
+function initApp(canvas: HTMLCanvasElement): AnimationCallback {
+  const Maker = new BallController();
+
+  Maker.create(50, "small", "light", "moveable");
+  Maker.create(50, "big", "heavy", "moveable");
 
   const sensor = initSensor();
-  const controller = new VelocityController(sensor);
+  const VelocityCtrl = new VelocityController(sensor);
 
   // eslint-disable-next-line
   return function animation(timestamp: DOMHighResTimeStamp): void {
@@ -18,12 +24,28 @@ function animate(canvas: HTMLCanvasElement): AnimationCallback {
 
     if (ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      maker.draw(ctx);
+      Maker.draw(ctx);
 
-      maker.update(controller.calculateVelocity(maker.getBalls));
+      const balls = Maker.getBalls;
 
-      window.requestAnimationFrame(animation);
+      Maker.updateAll(VelocityCtrl.updateGravityVelocity(balls));
+
+      // const pairs = checkCollisions(balls);
+      // const Velocities = pairs.map(calcNewVelocities);
+      // const Positions = pairs.map(resolveCollision);
+
+      // pairs.forEach((pair, index) => {
+      //   const [b1, b2] = pair;
+
+      //   Maker.updateBallVelocity(b1.id, Velocities[index][0]);
+      //   Maker.updateBallVelocity(b2.id, Velocities[index][1]);
+
+      //   Maker.updateBallPosition(b1.id, Positions[index][0]);
+      //   Maker.updateBallPosition(b2.id, Positions[index][1]);
+      // });
     }
+
+    window.requestAnimationFrame(animation);
   };
 }
 
@@ -32,5 +54,5 @@ const canvas = document.querySelector("canvas");
 if (canvas) {
   setupCanvasSize(canvas); // TODO subscribe to window size change
 
-  window.requestAnimationFrame(animate(canvas));
+  window.requestAnimationFrame(initApp(canvas));
 }
