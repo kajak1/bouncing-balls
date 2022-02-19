@@ -1,18 +1,32 @@
-import { Ball, UnknownBall, Vector } from "./types";
-import { Props, defaultBall, small, big, moveable, light, heavy } from "./Ball";
-import { distance } from "./math";
+import { DefaultBall, UnknownBall, Vector } from "./types";
+import {
+  Props,
+  defaultBall,
+  small,
+  big,
+  moveable,
+  light,
+  heavy,
+  colorful,
+} from "./Ball";
+import { clone_recursive } from "./utils";
 
 class BallController {
   private balls: UnknownBall[] = [];
-  private takenCoords: Pick<Ball, "id">[] = [];
+  private takenCoords: Pick<DefaultBall, "id">[] = [];
 
   constructor() {
     // do nothing
   }
 
-  private assignProps(target: Ball): (prop: keyof typeof Props) => UnknownBall {
+  private assignProps(
+    target: DefaultBall
+  ): (prop: keyof typeof Props) => UnknownBall {
     return function assign(prop: keyof typeof Props): UnknownBall {
       switch (prop) {
+        case "colorful":
+          Object.assign(target, colorful());
+          break;
         case "small":
           Object.assign(target, small());
           break;
@@ -32,21 +46,6 @@ class BallController {
 
       return target;
     };
-  }
-
-  private checkPosition(ball: UnknownBall): boolean {
-    if (!this.takenCoords) return true;
-
-    this.takenCoords.forEach((coord) => {
-      const otherBall = this.balls[coord.id];
-      if (
-        distance(ball.position, otherBall.position) <
-        ball.radius + otherBall.radius
-      ) {
-        return false;
-      }
-    });
-    return true;
   }
 
   private createOne(id: number, ...props: (keyof typeof Props)[]): UnknownBall {
@@ -70,24 +69,45 @@ class BallController {
     this.balls[i].position = newData;
   }
 
+  public getBall(i: number): UnknownBall {
+    return { ...this.balls[i] };
+  }
+
+  public setNew(balls: UnknownBall[]): void {
+    this.balls.forEach((ball) => {
+      this.balls[ball.id].velocity = balls[ball.id].velocity;
+      this.balls[ball.id].position = balls[ball.id].position;
+    });
+  }
+
   public updateAll(velocities: Vector[]): void {
     velocities.forEach((newData, index) => {
       this.balls[index].velocity = newData;
     });
   }
 
-  public draw(ctx: CanvasRenderingContext2D): void {
-    this.balls.forEach((ball) => {
-      ball.draw(ctx);
+  public updateAllSize(radiuses: number[]): void {
+    radiuses.forEach((radius, index) => {
+      this.balls[index].radius = radius;
+    });
+  }
 
+  public move(): void {
+    this.balls.forEach((ball) => {
       if ("move" in ball) {
         ball.move();
       }
     });
   }
 
+  public draw(ctx: CanvasRenderingContext2D): void {
+    this.balls.forEach((ball) => {
+      ball.draw(ctx);
+    });
+  }
+
   get getBalls(): UnknownBall[] {
-    return [...this.balls];
+    return clone_recursive(this.balls);
   }
 }
 

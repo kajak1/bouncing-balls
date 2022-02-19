@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html -p 3000",
-    "start-https": "parcel index.html -p 3000 --https"
+    "start-https": "rm -drf .parcel-cache && parcel index.html -p 3000 --https"
   },
   "repository": {
     "type": "git",
