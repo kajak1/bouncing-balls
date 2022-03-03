@@ -36,18 +36,29 @@ export function isArray(target: unknown): target is unknown[] {
   return Array.isArray(target);
 }
 
-// TODO type this
-export function clone_recursive(target, map = new Map()) {
+export function clone_recursive<T>(target: T, map = new Map()): T {
   if (typeof target === "object") {
-    const cloneTarget = Array.isArray(target) ? [] : {};
+    const cloneTarget: Record<string, unknown> | unknown[] = Array.isArray(
+      target
+    )
+      ? []
+      : {};
     if (map.get(target)) {
       return map.get(target);
     }
     map.set(target, cloneTarget);
-    for (const key in target) {
-      cloneTarget[key] = clone_recursive(target[key], map);
+    if (!Array.isArray(cloneTarget)) {
+      for (const key in target) {
+        cloneTarget[key] = clone_recursive(target[key], map);
+      }
+    } else {
+      if (Array.isArray(target)) {
+        target.forEach((_, index) => {
+          cloneTarget[index] = clone_recursive(target[index], map);
+        });
+      }
     }
-    return cloneTarget;
+    return cloneTarget as T;
   } else {
     return target;
   }

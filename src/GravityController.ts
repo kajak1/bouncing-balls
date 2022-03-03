@@ -23,30 +23,6 @@ class GravityController {
 
     return velocities;
   }
-
-  public scaleZ(balls: UnknownBall[]): number[] {
-    const { z: gravityZ } = this.sensor;
-
-    const maxRatio = 1.0001;
-    const minRatio = 0.9999;
-
-    const radiuses = balls.map((ball) => {
-      let newRadius =
-        ball.radius * (-gravityZ * (maxRatio - minRatio) + minRatio);
-
-      const minRadius = ball.radius * 0.9;
-      const maxRadius = ball.radius * 1.1;
-      if (newRadius < minRadius) {
-        newRadius = minRadius;
-      } else if (newRadius > maxRadius) {
-        newRadius = maxRadius;
-      }
-
-      return newRadius;
-    });
-
-    return radiuses;
-  }
 }
 
 export { GravityController };

@@ -15,12 +15,11 @@ type AnimationCallback = (timestamp: DOMHighResTimeStamp) => void;
 
 function initApp(canvas: HTMLCanvasElement, MODE: APP_MODE): AnimationCallback {
   const BallCtrl = new BallController();
+  const sensor = initSensor();
+  const GravityCtrl = new GravityController(sensor);
 
   BallCtrl.create(15, "small", "light", "moveable", "colorful");
   BallCtrl.create(15, "big", "heavy", "moveable", "colorful");
-
-  const sensor = initSensor();
-  const GravityCtrl = new GravityController(sensor);
 
   // eslint-disable-next-line
   return function animation(timestamp: DOMHighResTimeStamp): void {
