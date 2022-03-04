@@ -25,12 +25,12 @@ export interface DefaultBall {
   draw: (ctx: CanvasRenderingContext2D) => void;
 }
 
-export const Colors = {
-  tomato: "FF6347",
-  moutbattenPink: "977390",
-  oldRose: "AC7B7D",
-  rosyBrown: "BB8A89",
-  darkByznatium: "502F4C",
-  chineseViolet: "70587C",
-  thistle: "C8B8DB",
-} as const;
+export const Colors = [
+  "#FF6347",
+  "#977390",
+  "#AC7B7D",
+  "#BB8A89",
+  "#502F4C",
+  "#70587C",
+  "#C8B8DB",
+] as const;

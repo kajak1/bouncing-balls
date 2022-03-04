@@ -8,11 +8,11 @@ export function adjustSpeedByMass(radius: number) {
   };
 }
 
-export function getRandomColor(): keyof typeof Colors {
-  const colorsArr = Object.keys(Colors) as (keyof typeof Colors)[];
-  const randIndex = random(0, colorsArr.length);
+export function getRandomColor(): typeof Colors[number] {
+  const randIndex = random(0, Colors.length);
+  const colorsObj = { ...Colors };
 
-  return colorsArr[randIndex];
+  return colorsObj[randIndex];
 }
 
 export function setupCanvasSize(canvas: HTMLCanvasElement): void {
