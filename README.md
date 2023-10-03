@@ -1,4 +1,4 @@
-# Flying balls 😳
+# Flying balls 🏀
  Ball movement simulation with changing gravity based on GravitySensor of a device
  
  To start the app:
